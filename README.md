@@ -81,6 +81,14 @@ DDS（Data Distribution Service）是面向实时分布式系统的发布/订阅
 
 ---
 
+### 🏗️ 架构设计 [`architecture/`](architecture/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [SOA](architecture/SOA.md) | 面向服务架构（SOA）核心概念、优缺点、模式、技术栈与 SOA/微服务对比 |
+
+---
+
 ### 🔧 工具 [`tools/`](tools/)
 
 | 文件 | 内容简介 |
@@ -123,7 +131,7 @@ DDS（Data Distribution Service）是面向实时分布式系统的发布/订阅
 收录精选 PDF 书籍与学习笔记：
 
 - **C++**：《Effective Modern C++》笔记、C++ 八股文速查、面经整理
-- **DDS**：DDS 规范文档、SOA 架构设计
+- **DDS**：DDS 规范文档
 - **Python**：Python 核心知识速查
 
 ---
@@ -135,6 +143,8 @@ InterviewGuide/
 ├── cpp/                    # C++ 核心知识点（21 个专题）
 ├── python/                 # Python 核心知识点（11 个专题）
 ├── dds/                    # DDS 中间件（8 个专题）
+├── architecture/           # 架构设计
+│   └── SOA.md
 ├── network/                # 网络协议
 │   └── TCP UDP.md
 ├── tools/                  # 开发工具速查
