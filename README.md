@@ -1,6 +1,6 @@
 # InterviewGuide
 
-> 一份面向 **C++ / Python / DDS** 方向的技术面试知识库，涵盖核心语言特性、分布式中间件、网络协议及项目实战经验总结。适合有一定工程经验的开发者在面试前系统复习。
+> 一份面向 **C++ / Python / DDS / ROS2** 方向的技术面试知识库，涵盖核心语言特性、分布式中间件、机器人框架、网络协议及项目实战经验总结。适合有一定工程经验的开发者在面试前系统复习。
 
 ---
 
@@ -73,6 +73,102 @@ DDS（Data Distribution Service）是面向实时分布式系统的发布/订阅
 
 ---
 
+### 🤖 ROS / ROS2 [`ros/`](ros/)
+
+ROS（Robot Operating System）是机器人领域事实标准框架，ROS2 在 ROS1 基础上重构，基于 DDS 提供生产级可靠性、实时性与跨平台能力。本节按 **ROS1 / ROS2** 拆分子目录：
+
+#### ROS1 [`ros/ros1/`](ros/ros1/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [ROS1 简介](ros/ros1/ROS1%20简介.md) | ROS1 顶层架构、Master、TCPROS、catkin 概览 |
+| [ROS1 最佳实践](ros/ros1/ROS1%20最佳实践.md) | ⭐ 包结构 / Nodelet / launch / dynamic_reconfigure / 多机 / 迁移 ROS2 清单 |
+| [ROS1 通信机制](ros/ros1/ROS1%20通信机制.md) | Topic / Service / Action / Parameter 详解、Nodelet |
+| [ROS1 工具与构建](ros/ros1/ROS1%20工具与构建.md) | catkin_make/catkin build、roslaunch、rxx_* CLI、调试工具 |
+| [ROS1 vs ROS2 对比](ros/ros1/ROS1%20vs%20ROS2%20对比.md) | 全维度对比、API 对照、ros1_bridge 迁移路径 |
+| [ROS1 文件系统与消息族](ros/ros1/ROS1%20文件系统与消息族.md) | package.xml / CMakeLists、common_msgs、自定义 .msg/.srv/.action |
+| [ROS1 TF与坐标变换](ros/ros1/ROS1%20TF与坐标变换.md) | tf vs tf2、TransformListener、static_transform_publisher |
+| [ROS1 URDF与xacro](ros/ros1/ROS1%20URDF与xacro.md) | URDF 元素、xacro 宏、check_urdf、Gazebo 标签 |
+| [ROS1 ros_control与Gazebo](ros/ros1/ROS1%20ros_control与Gazebo.md) | controller_manager、HardwareInterface、Gazebo 插件 |
+| [ROS1 Navigation与MoveIt](ros/ros1/ROS1%20Navigation%E4%B8%8EMoveIt.md) | move_base、costmap、AMCL、MoveIt 1 框架 |
+| [ROS1 插件与动态参数](ros/ros1/ROS1%20插件与动态参数.md) | pluginlib、nodelet、dynamic_reconfigure |
+| [ROS1 多机部署与桥接](ros/ros1/ROS1%20多机部署与桥接.md) | ROS_MASTER_URI、multi-master、ros1_bridge、网络配置 |
+| [ROS1 性能调优与排查](ros/ros1/ROS1%20性能调优与排查.md) | nodelet 零拷贝、TCP_NODELAY、rosbag、rqt_top、常见瓶颈 |
+
+#### ROS2 [`ros/ros2/`](ros/ros2/)
+
+**核心基础**：
+
+| 文件 | 内容简介 |
+|------|----------|
+| [ROS2 入门教程](ros/ros2/ROS2%20入门教程.md) | 🌱 零基础起步：安装 → 第一个节点 → Topic/Service/Action → URDF+RViz |
+| [ROS2 最佳实践](ros/ros2/ROS2%20最佳实践.md) | ⭐ 工程化清单：包结构 / QoS / Executor / Launch / 测试 / 部署 / Top 20 Checklist |
+| [ROS2 简介](ros/ros2/ROS2%20简介.md) | 整体架构、版本演进、rcl/rmw 分层、Domain |
+| [ROS2 环境搭建与Docker](ros/ros2/ROS2%20环境搭建与Docker.md) | 安装、版本选择、Docker / devcontainer / 多机 |
+| [ROS2 节点与执行器](ros/ros2/ROS2%20节点与执行器.md) | Node、Executor 四种类型、CallbackGroup、WaitSet/GuardCondition、死锁陷阱 |
+| [ROS2 话题、服务与Action](ros/ros2/ROS2%20话题、服务与Action.md) | Topic / Service / Action 三机制详解与选型 |
+| [ROS2 常用消息族](ros/ros2/ROS2%20常用消息族.md) | std/geometry/sensor/nav/control_msgs 速查 |
+| [ROS2 参数与Launch](ros/ros2/ROS2%20参数与Launch.md) | Parameter API、launch.py、组合启动、重映射 |
+| [ROS2 参数与Launch高级](ros/ros2/ROS2%20参数与Launch高级.md) | ParameterEventHandler、OpaqueFunction、Lifecycle launch、launch_testing |
+| [ROS2 生命周期与组件化](ros/ros2/ROS2%20生命周期与组件化.md) | Lifecycle 状态机、Composition、IPC 零拷贝、Loaned Messages |
+| [ROS2 DDS与QoS](ros/ros2/ROS2%20DDS与QoS.md) | RMW 切换、QoS 兼容性、RTPS 子消息、Discovery Server、Domain 端口映射 |
+| [ROS2 DDS厂商调优与跨域部署](ros/ros2/ROS2%20DDS厂商调优与跨域部署.md) | Fast/Cyclone/Connext/Zenoh 对比、XML profile、跨网段、iceoryx |
+| [ROS2 TF2与时间](ros/ros2/ROS2%20TF2与时间.md) | TF Tree、`/tf` 与 `/tf_static`、`use_sim_time` |
+| [ROS2 消息序列化与XTypes](ros/ros2/ROS2%20消息序列化与XTypes.md) | rosidl 生成链、CDR/XCDR2、XTypes 注解、ROS2↔DDS Topic 映射 |
+| [ROS2 Action与pluginlib深入](ros/ros2/ROS2%20Action与pluginlib深入.md) | Action 状态机、pluginlib 5 步、Python entry_points |
+
+**构建与生态**：
+
+| 文件 | 内容简介 |
+|------|----------|
+| [ROS2 colcon与ament](ros/ros2/ROS2%20colcon与ament.md) | 构建系统、package.xml、ament_cmake / ament_python、rosidl |
+| [ROS2 ament_cmake与colcon高级](ros/ros2/ROS2%20ament_cmake与colcon高级.md) | export 三件套、混合 C++/Python、CMake 钩子、industrial_ci |
+| [ROS2 RViz2与可视化](ros/ros2/ROS2%20RViz2与可视化.md) | RViz2 插件、Foxglove、PlotJuggler、rqt 工具链 |
+| [ROS2 调试诊断与bag](ros/ros2/ROS2%20调试诊断与bag.md) | 日志/diagnostic/tracing、rosbag2（MCAP）、performance_test、排错方法论 |
+| [ROS2 测试_CI_CD](ros/ros2/ROS2%20测试_CI_CD.md) | gtest / pytest、launch_testing、ament_lint、industrial_ci、Docker buildx |
+| [ROS2 rclpy异步与GIL](ros/ros2/ROS2%20rclpy异步与GIL.md) | Python Executor、asyncio 集成、GIL 影响、性能注意 |
+
+**机器人栈**：
+
+| 文件 | 内容简介 |
+|------|----------|
+| [ROS2 URDF_xacro与Gazebo](ros/ros2/ROS2%20URDF_xacro与Gazebo.md) | URDF/xacro、SDF、Gazebo Sim (gz)、ros_gz_bridge |
+| [ROS2 ros2_control与Nav2生态](ros/ros2/ROS2%20ros2_control与Nav2生态.md) | HardwareInterface、控制器框架、Nav2 BT/Lifecycle/Costmap |
+| [ROS2 ros2_control进阶](ros/ros2/ROS2%20ros2_control进阶.md) | 链式控制器、admittance、real-time 编程、PREEMPT_RT |
+| [ROS2 Nav2深入与BT](ros/ros2/ROS2%20Nav2深入与BT.md) | planner/controller 选型、costmap layers、BT XML、collision_monitor |
+| [ROS2 SLAM工具链](ros/ros2/ROS2%20SLAM工具链.md) | slam_toolbox / Cartographer / Fast-LIO / RTAB-Map、evo |
+| [ROS2 MoveIt2](ros/ros2/ROS2%20MoveIt2.md) | 架构、Setup Assistant、planner、IK、MoveIt Servo |
+| [ROS2 Autoware与自动驾驶集成](ros/ros2/ROS2%20Autoware与自动驾驶集成.md) | Autoware Universe、Lanelet2、AWSIM/CARLA、Apollo 对比 |
+
+**实时 / 安全 / 嵌入式 / AI**：
+
+| 文件 | 内容简介 |
+|------|----------|
+| [ROS2 实时性与性能优化](ros/ros2/ROS2%20实时性与性能优化.md) | PREEMPT_RT、Loaned Messages、SHM、典型延迟数据、OS 调优清单 |
+| [ROS2 安全SROS2](ros/ros2/ROS2%20安全SROS2.md) | DDS-Security 五插件、keystore、enclave、governance/permissions |
+| [ROS2 安全Security实操与PKI](ros/ros2/ROS2%20安全Security实操与PKI.md) | enclave 实操、PKI 集成、证书轮换、CRL/OCSP、性能开销 |
+| [ROS2 micro-ROS与嵌入式](ros/ros2/ROS2%20micro-ROS与嵌入式.md) | rclc + Micro XRCE-DDS、FreeRTOS 部署、UART/UDP transport |
+| [ROS2 嵌入式与micro-ROS进阶](ros/ros2/ROS2%20嵌入式与micro-ROS进阶.md) | Zephyr、自定义 transport、static memory、Yocto、QNX |
+| [ROS2 ML集成与CUDA](ros/ros2/ROS2%20ML集成与CUDA.md) | ONNX/TensorRT/libtorch、Isaac NITROS、rosbag2 训练数据 |
+| [ROS2 REP规范与故障注入](ros/ros2/ROS2%20REP规范与故障注入.md) | REP-103/105/2003/2004、tc/netem 注入、chaos 工程 |
+| [ROS2 多机器人车队](ros/ros2/ROS2%20多机器人车队.md) | DOMAIN_ID/namespace/frame_id 三层隔离、Open-RMF、监控、OTA |
+
+#### ROS 公共知识 [`ros/common/`](ros/common/)
+
+ROS1 / ROS2 共享的数学、传感器、SLAM、规划、控制基础与端到端项目实战：
+
+| 文件 | 内容简介 |
+|------|----------|
+| [数学与坐标变换基础](ros/common/数学与坐标变换基础.md) | 欧拉/四元数/旋转矩阵/SE(3)、TF 语义、REP-103 |
+| [传感器接入实战](ros/common/传感器接入实战.md) | 相机 / LiDAR / IMU / GNSS / F-T 标定与同步、robot_localization |
+| [建图与定位综述](ros/common/建图与定位综述.md) | 2D / 3D / 视觉 SLAM 对比、闭环、地图表示、evo 评估 |
+| [运动规划综述](ros/common/运动规划综述.md) | 搜索 / 采样 / 优化、Frenet、局部 controller、机械臂、多机协同 |
+| [控制综述](ros/common/控制综述.md) | PID / Pure Pursuit / Stanley / LQR / MPC / 力控柔顺 |
+| [项目实战 差速底盘端到端](ros/common/项目实战-差速底盘端到端.md) | URDF→ros2_control→SLAM→Nav2→bag→Docker 全流程 |
+| [项目实战 机械臂 pick_place](ros/common/项目实战-机械臂pick_place.md) | URDF→MoveIt2→视觉抓取→状态机→力控装配 |
+
+---
+
 ### 🌐 网络 [`network/`](network/)
 
 | 文件 | 内容简介 |
@@ -124,6 +220,13 @@ DDS（Data Distribution Service）是面向实时分布式系统的发布/订阅
 | [MQTT与DDS对比](summarize/dds/MQTT与DDS对比.md) | 架构、实时性、QoS、适用场景全面对比 |
 | [协议栈对比(CAN-SOMEIP-DDS)](summarize/dds/协议栈对比\(CAN-SOMEIP-DDS\).md) | CAN 总线 / SOME-IP / DDS 三种协议横向对比 |
 
+#### ROS 方向 [`summarize/ros/`](summarize/ros/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [ROS1面试要点](summarize/ros/ROS1面试要点.md) | ROS1 架构、四种通信、catkin、Nodelet、高频问答 |
+| [ROS2面试要点](summarize/ros/ROS2面试要点.md) | rcl/rmw/DDS、Executor、QoS、Lifecycle、Composition、零拷贝、高频问答 |
+
 ---
 
 ### 📖 参考资料 [`reference/`](reference/)
@@ -143,6 +246,10 @@ InterviewGuide/
 ├── cpp/                    # C++ 核心知识点（21 个专题）
 ├── python/                 # Python 核心知识点（11 个专题）
 ├── dds/                    # DDS 中间件（8 个专题）
+├── ros/                    # ROS / ROS2（56 个专题）
+│   ├── ros1/               # ROS1（13 个专题：基础 + 最佳实践 + TF / URDF / ros_control / Nav / MoveIt / 多机 / 调优）
+│   ├── ros2/               # ROS2（36 个专题：入门 + 最佳实践 + 核心 + 构建 + 机器人栈 + 实时 / 安全 / 嵌入式 / AI / 车队）
+│   └── common/             # ROS 公共（7 个专题：数学 / 传感器 / SLAM / 规划 / 控制 / 项目实战×2）
 ├── architecture/           # 架构设计
 │   └── SOA.md
 ├── network/                # 网络协议
@@ -153,7 +260,8 @@ InterviewGuide/
 │   └── SQLite3.md
 ├── summarize/              # 面试总结
 │   ├── cpp/                # C++ 面试要点与系统排查
-│   └── dds/                # DDS 技术深度与实战案例
+│   ├── dds/                # DDS 技术深度与实战案例
+│   └── ros/                # ROS1 / ROS2 面试要点
 └── reference/              # 参考资料（PDF + 笔记）
     ├── C++/
     ├── DDS/
