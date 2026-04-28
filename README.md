@@ -12,7 +12,9 @@
 
 | 文件 | 内容简介 |
 |------|----------|
+| [C++ 最佳实践](cpp/C++%20最佳实践.md) | ⭐ RAII / Rule of Zero / 现代 C++17/20 / Sanitizer / Top 20 Checklist |
 | [C++ 简介](cpp/C++%20简介.md) | C++ 标准演进、编译流程、核心特性概览 |
+| [C++ 移动语义与完美转发](cpp/C++%20移动语义与完美转发.md) | 值类别 / 右值引用 / `std::move` / `std::forward` / Rule of 5 / NRVO |
 | [C++ 数据类型](cpp/C++%20数据类型.md) | 基本类型、类型转换、`sizeof` 等 |
 | [C++ 指针、智能指针、引用](cpp/C++%20指针、智能指针、引用.md) | 裸指针、`unique_ptr`/`shared_ptr`/`weak_ptr`、循环引用 |
 | [C++ 内存管理](cpp/C++%20内存管理.md) | 堆栈分配、`new`/`delete`、内存对齐、RAII |
@@ -34,6 +36,19 @@
 | [C++ 数组类型](cpp/C++%20数组类型.md) | 原生数组、`std::array`、动态数组 |
 | [C++ 格式说明符](cpp/C++%20格式说明符.md) | `printf`/`scanf` 格式说明符速查 |
 
+#### Eigen 线性代数库 [`cpp/eigen/`](cpp/eigen/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [Eigen_最佳实践](cpp/eigen/Eigen_最佳实践.md) | ⭐ 类型选择 / `auto` 陷阱 / `Ref<>` / Map 零拷贝 / Top 20 Checklist |
+| [Eigen_01_入门与基本类型](cpp/eigen/Eigen_01_入门与基本类型.md) | Matrix/Vector 类型、初始化、表达式模板 |
+| [Eigen_02_矩阵与向量操作](cpp/eigen/Eigen_02_矩阵与向量操作详解.md) | 运算、切片 (3.4)、Ref<> 、数值健壮性 |
+| [Eigen_03_线性方程与分解](cpp/eigen/Eigen_03_线性方程组求解与矩阵分解.md) | LU/Cholesky/QR/SVD 选型 |
+| [Eigen_04_特征值与几何变换](cpp/eigen/Eigen_04_特征值分解SVD与几何变换.md) | EigenSolver / SelfAdjoint / Quaternion |
+| [Eigen_05_稀疏矩阵与性能](cpp/eigen/Eigen_05_稀疏矩阵性能优化与工程实战.md) | Triplet / SimplicialLLT / SparseQR |
+| [Eigen_06_ROS_SLAM互操作](cpp/eigen/Eigen_06_ROS_SLAM生态互操作.md) | OpenCV / ROS msg / g2o / Ceres |
+| [Eigen_07_unsupported与优化](cpp/eigen/Eigen_07_unsupported模块与非线性优化.md) | AutoDiff / Spline / NonLinearOptimization |
+
 ---
 
 ### 🐍 Python [`python/`](python/)
@@ -42,6 +57,8 @@
 
 | 文件 | 内容简介 |
 |------|----------|
+| [Python 最佳实践](python/Python%20最佳实践.md) | ⭐ 类型注解 / asyncio / Ruff / pytest / 安全 / Top 20 Checklist |
+| [Python 异步编程 asyncio](python/Python%20异步编程%20asyncio.md) | 事件循环 / TaskGroup / 超时与取消 / uvloop / 常见坑 |
 | [Python 类 Class](python/Python%20类%20Class.md) | 继承、`MRO`、`__slots__`、元类 |
 | [Python 装饰器](python/Python%20装饰器.md) | 函数装饰器、类装饰器、装饰器链 |
 | [Python 内置装饰器](python/Python%20内置装饰器.md) | `@property`、`@classmethod`、`@staticmethod` |
@@ -62,6 +79,7 @@ DDS（Data Distribution Service）是面向实时分布式系统的发布/订阅
 
 | 文件 | 内容简介 |
 |------|----------|
+| [DDS 最佳实践](dds/DDS%20最佳实践.md) | ⭐ Domain/Partition / QoS 三组合 / 零拷贝 / 发现服务器 / Top 20 Checklist |
 | [DDS 概述](dds/DDS.md) | DDS 架构、核心概念（Domain / Topic / DataWriter / DataReader） |
 | [DDS QoS](dds/DDS%20QOS.md) | 23 种 QoS 策略详解（可靠性、持久性、截止时间等） |
 | [DDS Discovery](dds/DDS%20Discovery.md) | SPDP / SEDP 发现协议、动态发现机制 |
@@ -164,8 +182,12 @@ ROS1 / ROS2 共享的数学、传感器、SLAM、规划、控制基础与端到�
 | [建图与定位综述](ros/common/建图与定位综述.md) | 2D / 3D / 视觉 SLAM 对比、闭环、地图表示、evo 评估 |
 | [运动规划综述](ros/common/运动规划综述.md) | 搜索 / 采样 / 优化、Frenet、局部 controller、机械臂、多机协同 |
 | [控制综述](ros/common/控制综述.md) | PID / Pure Pursuit / Stanley / LQR / MPC / 力控柔顺 |
-| [项目实战 差速底盘端到端](ros/common/项目实战-差速底盘端到端.md) | URDF→ros2_control→SLAM→Nav2→bag→Docker 全流程 |
+| [项目实战 差速底盘端到端](ros/common/项目实战-差速底盘端端到端.md) | URDF→ros2_control→SLAM→Nav2→bag→Docker 全流程 |
 | [项目实战 机械臂 pick_place](ros/common/项目实战-机械臂pick_place.md) | URDF→MoveIt2→视觉抓取→状态机→力控装配 |
+| [机器人工程 最佳实践](ros/common/机器人工程%20最佳实践.md) | ⭐ 坐标系 / 传感器 / SLAM / 控制 / 安全 / OTA / Top 20 Checklist |
+| [SLAM 算法选型对比](ros/common/SLAM%20算法选型对比.md) | ORB-SLAM3 / VINS / FAST-LIO2 / Cartographer / RTAB-Map 横向对比与选型 |
+| [状态估计 KF EKF UKF](ros/common/状态估计%20KF%20EKF%20UKF.md) | KF/EKF/ESKF/UKF/PF / 因子图 / GTSAM iSAM2 / VIO / LIO |
+| [PID 控制与调参](ros/common/PID%20控制与调参.md) | 位置式 / 增量式 / 护饱和 / 串级 / 前馈 / Z-N 调参 |
 
 ---
 
@@ -173,7 +195,11 @@ ROS1 / ROS2 共享的数学、传感器、SLAM、规划、控制基础与端到�
 
 | 文件 | 内容简介 |
 |------|----------|
-| [TCP UDP](network/TCP%20UDP.md) | TCP 三次握手/四次挥手、滑动窗口、UDP 特性对比、Socket 编程 |
+| [网络 最佳实践](network/网络%20最佳实践.md) | ⭐ 客户端/服务端调优 / TLS / 心跳 / 服务发现 / 可观测 / Top 20 Checklist |
+| [TCP UDP](network/TCP%20UDP.md) | TCP 三次握手/四次挥手、滑动窗口、UDP 特性对比 |
+| [HTTP HTTPS](network/HTTP%20HTTPS.md) | HTTP/1.1 vs 2 vs 3、QUIC、TLS、状态码、缓存、CORS、REST |
+| [IO 多路复用](network/IO%20多路复用.md) | select/poll/epoll/kqueue/IOCP/io_uring、Reactor/Proactor、C10K→C10M |
+| [网络编程 Socket](network/网络编程%20Socket.md) | Berkeley socket、TCP/UDP 模板、关键 socket 选项、Unix Domain Socket |
 
 ---
 
@@ -181,7 +207,11 @@ ROS1 / ROS2 共享的数学、传感器、SLAM、规划、控制基础与端到�
 
 | 文件 | 内容简介 |
 |------|----------|
-| [SOA](architecture/SOA.md) | 面向服务架构（SOA）核心概念、优缺点、模式、技术栈与 SOA/微服务对比 |
+| [架构 最佳实践](architecture/架构%20最佳实践.md) | ⭐ 12-Factor / C4 / ADR / 容量 / HA / 安全 / DORA / Top 20 Checklist |
+| [SOA](architecture/SOA.md) | 面向服务架构 SOA 核心概念、优缺点、模式、技术栈与微服务对比 |
+| [微服务架构](architecture/微服务架构.md) | 拆分原则、RPC/MQ、Saga/TCC/Outbox、服务网格、GitOps、金丝雀 |
+| [设计模式](architecture/设计模式.md) | GoF 23 模式 + SOLID + 现代 C++/Python 实现要点 |
+| [分布式系统](architecture/分布式系统.md) | CAP/BASE、一致性模型、Paxos/Raft、Quorum、时钟、幂等 |
 
 ---
 
@@ -189,9 +219,43 @@ ROS1 / ROS2 共享的数学、传感器、SLAM、规划、控制基础与端到�
 
 | 文件 | 内容简介 |
 |------|----------|
+| [工具链 最佳实践](tools/工具链%20最佳实践.md) | ⭐ Git/Repo/SQLite/Shell/Docker/密钥管理 / Top 20 Checklist |
+| [Docker 与 Kubernetes 基础](tools/Docker%20与%20Kubernetes%20基础.md) | 容器原理 / Dockerfile / 多阶段构建 / Pod / Service / HPA / 调试排查 |
 | [git](tools/git.md) | 常用 git 命令、分支管理、rebase vs merge、冲突解决 |
 | [repo](tools/repo.md) | Android `repo` 工具使用、多仓库管理 |
 | [SQLite3](tools/SQLite3.md) | SQLite3 C++ API、常用 SQL 速查 |
+
+---
+
+### 🖥️ 操作系统 [`os/`](os/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [Linux 基础](os/Linux%20基础.md) | 进程线程 / 内存 / 文件 IO / 信号 / IPC / namespace + cgroup / systemd / 排查工具 |
+
+---
+
+### 🧩 算法与数据结构 [`dsa/`](dsa/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [数据结构与算法](dsa/数据结构与算法.md) | 复杂度 / 线性结构 / 树与图 / 排序 / DP / 字符串 / 高频 Top 30 |
+
+---
+
+### 🗄️ 数据库 [`database/`](database/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [数据库 基础](database/数据库%20基础.md) | SQL / 索引 / 事务与隔离 / MVCC / NoSQL / Redis / 分库分表 |
+
+---
+
+### 📨 消息队列 [`mq/`](mq/)
+
+| 文件 | 内容简介 |
+|------|----------|
+| [消息队列 选型与实战](mq/消息队列%20选型与实战.md) | Kafka / RabbitMQ / RocketMQ / Pulsar 对比 / 不丢不重有序 / 死信 / Outbox |
 
 ---
 
@@ -243,21 +307,22 @@ ROS1 / ROS2 共享的数学、传感器、SLAM、规划、控制基础与端到�
 
 ```
 InterviewGuide/
-├── cpp/                    # C++ 核心知识点（21 个专题）
-├── python/                 # Python 核心知识点（11 个专题）
-├── dds/                    # DDS 中间件（8 个专题）
-├── ros/                    # ROS / ROS2（56 个专题）
-│   ├── ros1/               # ROS1（13 个专题：基础 + 最佳实践 + TF / URDF / ros_control / Nav / MoveIt / 多机 / 调优）
-│   ├── ros2/               # ROS2（36 个专题：入门 + 最佳实践 + 核心 + 构建 + 机器人栈 + 实时 / 安全 / 嵌入式 / AI / 车队）
-│   └── common/             # ROS 公共（7 个专题：数学 / 传感器 / SLAM / 规划 / 控制 / 项目实战×2）
-├── architecture/           # 架构设计
-│   └── SOA.md
-├── network/                # 网络协议
-│   └── TCP UDP.md
-├── tools/                  # 开发工具速查
-│   ├── git.md
-│   ├── repo.md
-│   └── SQLite3.md
+├── cpp/                    # C++ 核心知识点（23 个专题 + Eigen 子目录）
+│   └── eigen/              # Eigen 线性代数库（8 个专题）
+├── python/                 # Python 核心知识点（13 个专题）
+├── mpc/                    # 模型预测控制（11 个专题）
+├── dds/                    # DDS 中间件（9 个专题）
+├── ros/                    # ROS / ROS2（60 个专题）
+│   ├── ros1/               # ROS1（13 个专题）
+│   ├── ros2/               # ROS2（36 个专题）
+│   └── common/             # ROS 公共（11 个专题：数学 / 传感器 / SLAM ×2 / 规划 / 控制 ×2 / 状态估计 / 实战×2 + 最佳实践）
+├── architecture/           # 架构设计（5 个专题）
+├── network/                # 网络协议（5 个专题）
+├── tools/                  # 开发工具速查（5 个专题：Git / Repo / SQLite / Docker+K8s / 工具链最佳实践）
+├── os/                     # 操作系统（1 个专题：Linux 基础）
+├── dsa/                    # 算法与数据结构（1 个专题）
+├── database/               # 数据库（1 个专题）
+├── mq/                     # 消息队列（1 个专题）
 ├── summarize/              # 面试总结
 │   ├── cpp/                # C++ 面试要点与系统排查
 │   ├── dds/                # DDS 技术深度与实战案例
