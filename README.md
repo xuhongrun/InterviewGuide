@@ -91,7 +91,24 @@ DDS（Data Distribution Service）是面向实时分布式系统的发布/订阅
 
 ---
 
+### 📼 MCAP（消息录制格式）[`mcap/`](mcap/)
+
+MCAP（Message Capture）是 Foxglove 开源的**容器无关、自描述、可流式**机器人数据记录文件格式，是 ROS2 Jazzy 起 `rosbag2` 的默认存储后端，也是 ROS1 `.bag` / ROS2 `.db3` 的现代替代方案：
+
+| 文件 | 内容简介 |
+|------|----------|
+| [MCAP 最佳实践](mcap/MCAP%20最佳实践.md) | ⭐ 压缩选型 / chunk 与索引 / schema / 元数据附件 / 校验 / Top 20 Checklist |
+| [MCAP 简介](mcap/MCAP%20简介.md) | 格式顶层结构 / Schema·Channel·Message·Chunk / 压缩 / 随机访问 / 工具库 |
+| [MCAP 读写与API](mcap/MCAP%20读写与API.md) | C++ Writer/Reader / schema·channel 复用 / 自定义 I/O / 并发与数据指针生命周期；Python/ROS2 简短附录 |
+| [MCAP 写入优化](mcap/MCAP%20写入优化.md) | ⭐ C++ 写入流水线 / 有界队列与背压 / buffer 生命周期 / chunk·压缩·索引 / 持久化 / 轮转恢复 / 基准测试 |
+| [MCAP 读取优化](mcap/MCAP%20读取优化.md) | ⭐ C++ 顺序/索引读取 / `ReadMessageOptions` 详解 / 过滤与读放大 / 解压内存 / 并行 / IReadable / 对象存储 / 最佳实践 |
+| [MCAP 性能优化](mcap/MCAP%20性能优化.md) | C++ 全链路性能 / 压缩与 chunk / 索引 / CRC / 自定义 I/O / 基准测试 / 场景化配置 |
+| [MCAP Q&A](mcap/MCAP%20Q%26A.md) | 高频面试问题与参考答案（格式原理 / 与 db3 对比 / 随机访问 / 读写 API / 性能优化） |
+
+---
+
 ### 🤖 ROS / ROS2 [`ros/`](ros/)
+
 
 ROS（Robot Operating System）是机器人领域事实标准框架，ROS2 在 ROS1 基础上重构，基于 DDS 提供生产级可靠性、实时性与跨平台能力。本节按 **ROS1 / ROS2** 拆分子目录：
 
@@ -312,6 +329,7 @@ InterviewGuide/
 ├── python/                 # Python 核心知识点（13 个专题）
 ├── mpc/                    # 模型预测控制（11 个专题）
 ├── dds/                    # DDS 中间件（9 个专题）
+├── mcap/                   # MCAP 消息录制格式（7 个专题）
 ├── ros/                    # ROS / ROS2（60 个专题）
 │   ├── ros1/               # ROS1（13 个专题）
 │   ├── ros2/               # ROS2（36 个专题）
