@@ -1,4 +1,8 @@
-DDS（Data Distribution Service）协议栈在构建高性能、实时、分布式系统（如自动驾驶、工业控制、航空航天、金融交易等）中扮演着核心角色。然而，其复杂性和对网络、配置的高度依赖，使得在实际使用中难免会遇到各种问题。以下是一些常见问题及其排查方向的系统性总结：
+# DDS 问题排查清单
+
+> 状态：`reviewed`（2026-10-10）。本文给出排查入口，不替代具体厂商和版本的官方文档；尚未配套公开实验。
+
+DDS（Data Distribution Service）在高性能、实时、分布式系统中被广泛使用。它对网络、类型和 QoS 配置较为敏感，排查时应先判断问题位于发现、端点匹配、数据传输还是应用处理阶段。
 
 ## 一、通信问题（数据收不到/发不出）
 
@@ -27,14 +31,14 @@ DDS（Data Distribution Service）协议栈在构建高性能、实时、分布�
 3. **QoS策略不兼容**
     * **问题**：`DataWriter`和`DataReader`的QoS策略不匹配导致无法建立连接（即使发现了彼此）。
     * **排查方向**：
-        * **RELIABILITY**：`Writer`是`BEST_EFFORT`而`Reader`要求`RELIABLE`？或者反之？这是最常见的不匹配。
+        * **RELIABILITY**：RxO 关系是单向的。`RELIABLE Writer -> BEST_EFFORT Reader`通常兼容；`BEST_EFFORT Writer -> RELIABLE Reader`不兼容。
         * **DURABILITY**：`Reader`要求`TRANSIENT_LOCAL`/`TRANSIENT`/`PERSISTENT`，但`Writer`是`VOLATILE`？
-        * **OWNERSHIP**：`Reader`要求`EXCLUSIVE`，但检测到多个`Writer`？或者`STRENGTH`配置不正确？
-        * **LIVELINESS**：`Reader`的`LeaseDuration`小于`Writer`的`AnnouncementPeriod`，导致认为`Writer`失效？
+        * **OWNERSHIP**：Writer 与 Reader 的 Ownership kind 是否一致？多个 EXCLUSIVE Writer 可以被发现，Reader 通常依据 Ownership Strength 和活性选择所有者。
+        * **LIVELINESS**：Writer 提供的 kind 与 lease duration 是否满足 Reader 的请求？端点匹配和匹配后的活性丢失应分开判断。
         * **DEADLINE**：`Reader`要求的`Deadline`周期小于`Writer`承诺的周期？
-        * **PARTITION**：`Writer`和`Reader`的**Partition**名称列表没有交集？空分区(`""`)和未设置分区通常不匹配。
-        * **TOPIC/TYPE 匹配**：Topic名称、数据类型名称、Key定义是否完全一致（包括大小写）？类型结构（成员名称、顺序、类型）是否严格兼容？
-        * **工具**：使用DDS实现提供的管理控制台工具（如RTI Admin Console, `rtiddsspy` for CycloneDDS, `dcpsinfo_dump` for OpenDDS）查看已发现的端点及其QoS，检查匹配状态。**检查`PublicationMatched`/`SubscriptionMatched`状态监听器或等待集的触发情况**。
+        * **PARTITION**：Writer 和 Reader 的 Partition 名称是否存在匹配。未显式设置时通常使用默认空字符串语义，并非天然不兼容。
+        * **TOPIC/TYPE 匹配**：Topic 名称和类型标识是否兼容。启用 XTypes 后，结构兼容性还取决于 extensibility、TypeConsistencyEnforcement 和双方实现能力，不能只按成员顺序判断。
+        * **工具**：使用厂商对应工具查看端点、QoS 和匹配状态，例如 RTI Admin Console/`rtiddsspy`、Cyclone DDS `ddsperf` 及相应发现工具、OpenDDS `dcpsinfo_dump`。同时检查 `PublicationMatched`、`SubscriptionMatched` 和 incompatible QoS 状态。
 
 4. **端点创建失败**
     * **问题**：无法创建`DataWriter`或`DataReader`。
@@ -123,19 +127,19 @@ DDS（Data Distribution Service）协议栈在构建高性能、实时、分布�
 
 * **问题**：不同DDS实现（RTI, CycloneDDS, OpenDDS, CoreDX）之间无法通信或行为不一致。
 * **排查方向**：
-    * **RTPS标准兼容性**：确保所有实现都宣称并实际支持相同的RTPS版本（通常是最新版本兼容性最好）。
+    * **RTPS标准兼容性**：确认所有实现存在共同支持并经过互操作测试的 RTPS、XTypes 与 Security 能力集合；版本更新不自动保证兼容。
     * **发现协议**：**严格统一配置**：使用相同的Domain ID，相同的**单播发现地址列表**(`InitialPeers`)或确保组播能通且地址/端口一致。避免依赖各厂商的默认值。
-    * **QoS策略**：只使用RTPS标准中定义且双方都支持的QoS策略。避免使用厂商特有的扩展QoS。特别注意`PARTITION`, `OWNERSHIP`, `LIVELINESS`等复杂策略的配置语义是否一致。
-    * **类型系统**：确保IDL定义完全相同，使用标准IDL特性。注意不同实现可能对`enum`, `union`, `string/wstring`边界、默认值等的细微处理差异。考虑使用`@extensibility(MUTABLE)`提高兼容性。
+    * **QoS策略**：优先使用双方都支持的标准 DDS QoS，避免依赖厂商扩展。特别验证 `PARTITION`、`OWNERSHIP`、`LIVELINESS` 等策略的互操作行为。
+    * **类型系统**：从相同 IDL 生成类型，并核对类型标识、extensibility 和 TypeConsistencyEnforcement。只有双方都支持所需 XTypes 能力时，`appendable` 或 `mutable` 才能用于相应的演化场景。
     * **工具**：使用RTPS标准的网络嗅探工具（如Wireshark + RTPS dissector）分析发现和数据流量，检查是否符合规范。
     * **厂商文档**：查阅各厂商关于互操作性的具体指南和已知限制。
 
 ## 通用排查步骤和工具
 
-1. **启用日志**：**这是最重要的第一步！** 将DDS实现的日志级别提高到`DEBUG`或`VERBOSE`，重点关注`DISCOVERY`, `RTPS`, `TRANSPORT`, `SECURITY`等类别。日志会清晰指出发现过程、连接建立、数据传输、QoS冲突、安全错误等关键信息。
+1. **启用日志**：这是常用的第一步。将 DDS 实现的日志级别临时提高到 `DEBUG` 或 `VERBOSE`，重点关注 `DISCOVERY`、`RTPS`、`TRANSPORT`、`SECURITY` 等类别，并控制日志量和敏感信息。
 2. **使用管理工具**：
     * RTI Connext: Admin Console, `rtiddsspy`, `rtiroutingservice`, `rtirecorder`.
-    * Eclipse CycloneDDS: `cyclonedds`命令行工具(`cyclonedds discovery`, `cyclonedds list`等)，`ddsperf`.
+    * Eclipse Cyclone DDS: `ddsperf`、运行日志与 Wireshark RTPS dissector；其他诊断工具以所用版本文档为准。
     * OpenDDS: `dcpsinfo_dump`, `monitor`.
     * CoreDX DDS: `dxshell`, `dxmonitor`.
     * 通用：Wireshark (with RTPS dissector) - **抓包分析是终极利器**。
@@ -149,10 +153,19 @@ DDS（Data Distribution Service）协议栈在构建高性能、实时、分布�
 1. **Domain ID** 一致吗？
 2. **防火墙/安全组** 放行了必要的**端口(UDP/TCP)** 和 **组播地址**吗？
 3. **QoS策略** (特别是 `RELIABILITY`, `DURABILITY`, `PARTITION`, `OWNERSHIP`, `LIVELINESS`, `DEADLINE`, `HISTORY`) 在匹配的 `DataWriter` 和 `DataReader` 上兼容吗？
-4. **Topic名称** 和 **数据类型名称/结构** 完全一致吗？
+4. **Topic 名称** 与 **数据类型标识/结构** 兼容吗？若使用 XTypes，双方的 extensibility 与一致性策略匹配吗？
 5. **发现配置** (`InitialPeers` 列表或组播地址/端口) 正确且一致/可达吗？
 6. 查看 **DDS日志** (级别调到DEBUG/VERBOSE) 了吗？
 7. 使用 **Wireshark (RTPS)** 抓包看发现和数据报文了吗？
 8. 程序是否正确 **销毁** 了所有创建的DDS实体？
 
 通过系统性地按照以上方向进行排查，结合详细的日志和抓包分析，大部分DDS使用过程中的问题都可以被定位和解决。理解DDS的核心机制（尤其是发现和QoS匹配）是有效排查的关键。
+
+## 核查依据
+
+- [OMG Data Distribution Service (DDS) 1.4](https://www.omg.org/spec/DDS/1.4)
+- [OMG DDS Interoperability Wire Protocol (DDSI-RTPS) 2.5](https://www.omg.org/spec/DDSI-RTPS/2.5)
+- [OMG DDS Extensible and Dynamic Topic Types (DDS-XTypes) 1.3](https://www.omg.org/spec/DDS-XTypes/1.3)
+- [OMG DDS Security 1.1](https://www.omg.org/spec/DDS-SECURITY/1.1)
+
+厂商工具、配置项和默认行为会随版本变化，实际排查时还需对照所用产品的版本化官方文档。
